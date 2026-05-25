@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+  <title>AI Cloud Browser</title>
+
+  <link
+    rel="stylesheet"
+    href="style.css">
+
+</head>
+
+<body>
+
+  <div class="app">
+
+    <!-- SIDEBAR -->
+
+    <div class="sidebar">
+
+      <div class="logo">
+
+        AI Browser
+
+      </div>
+
+      <div class="chat-area">
+
+        <div class="message ai">
+
+          Ready for commands.
+
+        </div>
+
+      </div>
+
+      <div class="input-area">
+
+        <input
+          id="prompt"
+          type="text"
+          placeholder="Tell the AI what to do...">
+
+        <button onclick="sendCommand()">
+
+          Send
+
+        </button>
+
+      </div>
+
+    </div>
+
+    <!-- BROWSER -->
+
+    <div class="browser-container">
+
+      <iframe
+        id="browserFrame"
+        src="https://inbrowserbrowser.onrender.com">
+      </iframe>
+
+    </div>
+
+  </div>
+
+  <script src="app.js"></script>
+
+</body>
+
+</html>
