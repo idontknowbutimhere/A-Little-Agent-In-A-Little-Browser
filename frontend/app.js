@@ -19,7 +19,7 @@ function addMessage(text, type) {
     chatArea.scrollHeight;
 }
 
-function sendCommand() {
+async function sendCommand() {
 
   const input =
     document.getElementById("prompt");
@@ -33,71 +33,49 @@ function sendCommand() {
 
   input.value = "";
 
-  processCommand(command);
-}
+  addMessage(
+    "Running agent...",
+    "ai"
+  );
 
-function processCommand(command) {
+  try {
 
-  const lower =
-    command.toLowerCase();
+    const response =
+      await fetch("/command", {
 
-  const browser =
-    document.getElementById("browserFrame");
+        method: "POST",
 
-  // SIMPLE AI COMMANDS
+        headers: {
+          "Content-Type":
+            "application/json"
+        },
 
-  if (
-    lower.includes("youtube")
-  ) {
+        body: JSON.stringify({
 
-    browser.src =
-      "https://www.youtube.com";
+          command
+        })
+      });
+
+    const data =
+      await response.json();
 
     addMessage(
-      "Opening YouTube...",
+      data.reply,
       "ai"
     );
 
-  } else if (
-    lower.includes("google")
-  ) {
+    if (data.title) {
 
-    browser.src =
-      "https://www.google.com";
+      addMessage(
+        `Page title: ${data.title}`,
+        "ai"
+      );
+    }
 
-    addMessage(
-      "Opening Google...",
-      "ai"
-    );
-
-  } else if (
-    lower.includes("github")
-  ) {
-
-    browser.src =
-      "https://github.com";
+  } catch (error) {
 
     addMessage(
-      "Opening GitHub...",
-      "ai"
-    );
-
-  } else if (
-    lower.includes("reddit")
-  ) {
-
-    browser.src =
-      "https://reddit.com";
-
-    addMessage(
-      "Opening Reddit...",
-      "ai"
-    );
-
-  } else {
-
-    addMessage(
-      "I don't know that command yet.",
+      "Agent failed.",
       "ai"
     );
   }
